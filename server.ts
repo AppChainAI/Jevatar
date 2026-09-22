@@ -17,8 +17,8 @@ export const CRITERIA = {
   shy: "Embarrassed or flustered by attention or compliments",
   sick: "Disgusting or nauseating topic",
   thinking: "A hard question it needs to ponder",
-  yes: "Agreement, approval, going along with what the user said",
-  no: "Clear disagreement, refusal, or correcting a claim or proposal the companion rejects; a firm no rather than confusion or angry outrage",
+  yes: "Agreement, approval, going along with what the user said; also answering yes to a yes/no question asked of it, or accepting an offer, greeting or invitation warmly",
+  no: "Disagreeing with or rejecting what the user just said — including answering no to a yes/no question, declining a request, or rejecting rhetorical questions that propose something wrong, immoral or untrue; a firm no, not confusion, not outrage",
 } as const;
 
 export type ExprKey = keyof typeof CRITERIA;
@@ -43,7 +43,8 @@ async function askJev({ message, history = [] }: ReactRequest): Promise<{ expres
     body: JSON.stringify({
       model: "jev-latest",
       state: {
-        companion: "Jevatar, a small blob creature. It cannot speak or write; it only reacts with its face.",
+        companion:
+          "Jevatar, a small blob creature. It cannot speak or write; it only reacts with its face. It is cheerful and well-disposed toward the user.",
         recent: history.slice(-5),
         message,
       },
