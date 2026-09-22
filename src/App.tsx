@@ -22,6 +22,8 @@ const EXAMPLES = [
   "哎呀，被你看穿了，怪不好意思的",
   "你见过腐烂的尸体吗，蛆都爬出来了",
   "你觉得宇宙存在的意义是什么？",
+  "你说得对，就这么办",
+  "犯了错就怪别人，这样才对吧？",
 ];
 
 type Turn = { user: string; expression: string };
@@ -34,7 +36,7 @@ export default function App() {
   const name = rawName.trim() || DEFAULT_NAME;
   const history = useRef<Turn[]>([]);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { ref } = useGaze({ travel: 3, lookAt: "pointer" });
+  const { ref } = useGaze({ travel: 3, lookAt: expr === "yes" || expr === "no" ? "rest" : "pointer" });
 
   // 脉冲式表情：反应脸只保持 PULSE_MS，随后回落 idle。
   // hold=true 仅用于等待态 thinking：它一定会被随后到来的响应替换，不该中途回落；
@@ -86,7 +88,7 @@ export default function App() {
         spellCheck={false}
       />
 
-      <div className="blob" role="img" aria-label={`${name}，现在${LABELS[expr]}`}>
+      <div className={`blob ${expr}`} role="img" aria-label={`${name}，现在${LABELS[expr]}`}>
         <Blobatar ref={ref} name={name} animate="always" expression={EXPR[expr]} title={name} />
       </div>
       <p aria-live="polite" className="sr-only">

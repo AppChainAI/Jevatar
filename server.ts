@@ -1,7 +1,7 @@
 import { serve } from "bun";
 import { join, normalize } from "node:path";
 
-// 与 blobatar/expression 的 14 个表情一一对应；描述即官方定义，保证语义对齐
+// 14 个内置表情 + 自定义 yes / no；与前端 EXPR 保持一致。
 export const CRITERIA = {
   idle: "Neutral default, nothing in particular to react to",
   happy: "Pleased, amused, greeted warmly, good news",
@@ -17,6 +17,8 @@ export const CRITERIA = {
   shy: "Embarrassed or flustered by attention or compliments",
   sick: "Disgusting or nauseating topic",
   thinking: "A hard question it needs to ponder",
+  yes: "Agreement, approval, going along with what the user said",
+  no: "Clear disagreement, refusal, or correcting a claim or proposal the companion rejects; a firm no rather than confusion or angry outrage",
 } as const;
 
 export type ExprKey = keyof typeof CRITERIA;

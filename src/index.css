@@ -67,6 +67,120 @@ body {
   display: block;
 }
 
+/* 先正视，再在约一秒内点两下头；第二下更轻，随后稳稳停住。
+   使用 SVG 内部坐标，大小改变时幅度仍按头像比例缩放。 */
+.blob.yes {
+  --yes-duration: 900ms;
+  --yes-delay: 140ms;
+}
+
+.blob.yes .mo-bob {
+  animation: jv-nod var(--yes-duration) var(--yes-delay) both;
+}
+
+.blob.yes .mo-eyes {
+  animation: jv-nod-gaze var(--yes-duration) var(--yes-delay) both;
+}
+
+/* 替换随机眨眼，让收眼与点头同步；保留库对种子眼睛角度的校正。 */
+.blob.yes .mo-eye > * {
+  animation: jv-confirm-eyes var(--yes-duration) var(--yes-delay) both;
+}
+
+@keyframes jv-nod {
+  0%, 100% {
+    transform: translateY(0) scale(1, 1);
+    animation-timing-function: ease-out;
+  }
+  12% {
+    transform: translateY(-1px) scale(0.995, 1.01);
+    animation-timing-function: ease-in;
+  }
+  28% {
+    transform: translateY(3px) scale(1.025, 0.96);
+    animation-timing-function: ease-out;
+  }
+  44% {
+    transform: translateY(-0.7px) scale(0.995, 1.01);
+    animation-timing-function: ease-in;
+  }
+  62% {
+    transform: translateY(2.2px) scale(1.018, 0.97);
+    animation-timing-function: ease-out;
+  }
+  80% {
+    transform: translateY(-0.3px) scale(1, 1);
+    animation-timing-function: ease-in-out;
+  }
+}
+
+/* 眼睛比轮廓多向下走一点，形成低头的朝向变化，而非整张图漂浮。 */
+@keyframes jv-nod-gaze {
+  0%, 12%, 44%, 80%, 100% { transform: translateY(0); }
+  28% { transform: translateY(1.8px); }
+  62% { transform: translateY(1.3px); }
+}
+
+@keyframes jv-confirm-eyes {
+  0%, 12%, 44%, 80%, 100% {
+    transform: rotate(calc(var(--mo-lean, 0) * 1deg)) scaleY(1)
+      rotate(calc(var(--mo-lean, 0) * -1deg));
+  }
+  28%, 62% {
+    transform: rotate(calc(var(--mo-lean, 0) * 1deg)) scaleY(0.48)
+      rotate(calc(var(--mo-lean, 0) * -1deg));
+  }
+}
+
+/* 先收紧目光，再左右摇两轮，第二轮幅度递减，最终回正。
+   眼睛相对轮廓横移并略收窄，表现转头而非横向滑动。 */
+.blob.no {
+  --no-duration: 820ms;
+  --no-delay: 160ms;
+}
+
+.blob.no .mo-bob {
+  animation: jv-shake-head var(--no-duration) ease-in-out var(--no-delay) both;
+}
+
+.blob.no .mo-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: jv-shake-gaze var(--no-duration) ease-in-out var(--no-delay) both;
+}
+
+.blob.no .mo-eye > * {
+  animation: jv-disagree-eyes var(--no-duration) ease-in-out var(--no-delay) both;
+}
+
+@keyframes jv-shake-head {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  18% { transform: translateX(-2.4px) rotate(-2deg); }
+  38% { transform: translateX(2.4px) rotate(2deg); }
+  58% { transform: translateX(-1.6px) rotate(-1.3deg); }
+  78% { transform: translateX(1.2px) rotate(1deg); }
+}
+
+@keyframes jv-shake-gaze {
+  0%, 100% { transform: translateX(0) scaleX(1); }
+  18% { transform: translateX(-3px) scaleX(0.94); }
+  38% { transform: translateX(3px) scaleX(0.94); }
+  58% { transform: translateX(-2px) scaleX(0.96); }
+  78% { transform: translateX(1.5px) scaleX(0.98); }
+}
+
+/* 不闭眼：摇头时进一步收眼，回正时稍睁开，仍保持反驳的眼形。 */
+@keyframes jv-disagree-eyes {
+  0%, 100% {
+    transform: rotate(calc(var(--mo-lean, 0) * 1deg)) scaleY(1)
+      rotate(calc(var(--mo-lean, 0) * -1deg));
+  }
+  18%, 38%, 58%, 78% {
+    transform: rotate(calc(var(--mo-lean, 0) * 1deg)) scaleY(0.8)
+      rotate(calc(var(--mo-lean, 0) * -1deg));
+  }
+}
+
 .composer {
   display: flex;
   gap: 0.5rem;
@@ -156,5 +270,13 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
+  }
+  .blob.yes .mo-bob,
+  .blob.yes .mo-eyes,
+  .blob.yes .mo-eye > *,
+  .blob.no .mo-bob,
+  .blob.no .mo-eyes,
+  .blob.no .mo-eye > * {
+    animation: none;
   }
 }

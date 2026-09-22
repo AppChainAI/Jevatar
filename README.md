@@ -1,8 +1,8 @@
 # Jevatar
 
-An AI companion that replies only with facial expressions. You type; [Jev](https://docs.typesafe.ai) (TypeSafe System One) judges your message and picks 1 of 14 moods; [blobatar](https://blobatar.dev) morphs its face. No text replies, no chat history.
+An AI companion that replies only with facial expressions. You type; [Jev](https://docs.typesafe.ai) (TypeSafe System One) judges your message and picks 1 of 16 moods (14 built-in expressions plus a custom double-nod `yes` and head-shake `no`); [blobatar](https://blobatar.dev) morphs its face. No text replies or visible chat history; recent turns are kept in memory for context.
 
-只用表情与你交流的 blob 伙伴。你打字，[Jev](https://docs.typesafe.ai)（TypeSafe System One）判断它该露出什么表情，[blobatar](https://blobatar.dev) 负责把脸画出来并做过渡动画。没有文字回复，没有聊天记录。
+只用表情与你交流的 blob 伙伴。你打字，[Jev](https://docs.typesafe.ai)（TypeSafe System One）从 16 种表情中选择反应，[blobatar](https://blobatar.dev) 负责把脸画出来并做过渡动画。其中自定义 `yes` 用快速双点头与同步收眼表达肯定，`no` 用两轮幅度递减的左右摇头和坚定的眼神表达反对。没有文字回复，不显示聊天记录；最近几轮对话仅在内存中保留，用于判断上下文。
 
 ## 配置
 
