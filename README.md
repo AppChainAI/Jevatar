@@ -1,5 +1,7 @@
 # Jevatar
 
+An AI companion that replies only with facial expressions. You type; [Jev](https://docs.typesafe.ai) (TypeSafe System One) judges your message and picks 1 of 14 moods; [blobatar](https://blobatar.dev) morphs its face. No text replies, no chat history.
+
 只用表情与你交流的 blob 伙伴。你打字，[Jev](https://docs.typesafe.ai)（TypeSafe System One）判断它该露出什么表情，[blobatar](https://blobatar.dev) 负责把脸画出来并做过渡动画。没有文字回复，没有聊天记录。
 
 ## 配置
