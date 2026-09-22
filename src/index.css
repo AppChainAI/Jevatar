@@ -1,0 +1,115 @@
+:root {
+  --bg: #10141c;
+  --surface: #1a2030;
+  --line: #2a3247;
+  --text: #e8ecf4;
+  --muted: #8a93a8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+}
+
+.stage {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vh, 2rem);
+  padding: 2rem 1rem;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.blob {
+  width: min(52vmin, 340px);
+}
+
+.blob > * {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.composer {
+  display: flex;
+  gap: 0.5rem;
+  width: min(92vw, 26rem);
+}
+
+.composer input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.8rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  outline: none;
+}
+
+.composer input::placeholder {
+  color: var(--muted);
+}
+
+.composer input:focus-visible {
+  border-color: var(--muted);
+}
+
+.composer button {
+  padding: 0.8rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--text);
+  color: var(--bg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.composer button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.composer button:focus-visible,
+.composer input:focus-visible {
+  outline: 2px solid var(--muted);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
