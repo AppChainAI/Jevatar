@@ -35,10 +35,26 @@ body {
 
 .name {
   margin: 0;
+  padding: 0.15em 0.3em;
+  border: none;
+  border-bottom: 1px dashed transparent;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
   font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: 0.06em;
-  color: var(--muted);
+  text-align: center;
+  outline: none;
+  field-sizing: content; /* 原生自适应宽度；不支持的浏览器退化为默认宽度 */
+  min-width: 4ch;
+  max-width: 80vw;
+}
+
+.name:hover,
+.name:focus-visible {
+  border-bottom-color: var(--muted);
+  color: var(--text);
 }
 
 .blob {
@@ -97,6 +113,35 @@ body {
 .composer input:focus-visible {
   outline: 2px solid var(--muted);
   outline-offset: 2px;
+}
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  width: min(92vw, 34rem);
+}
+
+.examples button {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.examples button:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
+.examples button:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 .sr-only {

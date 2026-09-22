@@ -5,8 +5,24 @@ import "blobatar/motion.css";
 import "blobatar/gaze.css";
 import { EXPR, LABELS, type ExprKey } from "./expressions";
 
-const NAME = "Jevatar";
+const DEFAULT_NAME = "Jevatar";
 const PULSE_MS = 2000; // 表情保持时长，之后回落 idle
+
+const EXAMPLES = [
+  "早安！今天天气真好",
+  "我考试挂科了，好难受",
+  "你这个没用的东西，气死我了",
+  "什么？！我中彩票了？",
+  "嘘…告诉你个秘密，别告诉别人",
+  "好无聊啊…都凌晨两点了",
+  "你真聪明，这都被你答对了",
+  "asdfghjkl 阿巴阿巴??",
+  "我床底下好像有声音…",
+  "我真的好喜欢你呀",
+  "哎呀，被你看穿了，怪不好意思的",
+  "你见过腐烂的尸体吗，蛆都爬出来了",
+  "你觉得宇宙存在的意义是什么？",
+];
 
 type Turn = { user: string; expression: string };
 
@@ -14,6 +30,8 @@ export default function App() {
   const [expr, setExpr] = useState<ExprKey>("idle");
   const [pending, setPending] = useState(false);
   const [text, setText] = useState("");
+  const [rawName, setRawName] = useState(DEFAULT_NAME);
+  const name = rawName.trim() || DEFAULT_NAME;
   const history = useRef<Turn[]>([]);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { ref } = useGaze({ travel: 3, lookAt: "pointer" });
@@ -29,9 +47,7 @@ export default function App() {
     }
   }
 
-  async function send(e: React.FormEvent) {
-    e.preventDefault();
-    const message = text.trim();
+  async function react(message: string) {
     if (!message || pending) return;
     setText("");
     setPending(true);
@@ -54,15 +70,27 @@ export default function App() {
     }
   }
 
+  function send(e: React.FormEvent) {
+    e.preventDefault();
+    react(text.trim());
+  }
+
   return (
     <main className="stage">
-      <h1 className="name">{NAME}</h1>
+      <input
+        className="name"
+        value={rawName}
+        onChange={(e) => setRawName(e.target.value)}
+        aria-label="名称（决定长相）"
+        placeholder={DEFAULT_NAME}
+        spellCheck={false}
+      />
 
-      <div className="blob" role="img" aria-label={`${NAME}，现在${LABELS[expr]}`}>
-        <Blobatar ref={ref} name={NAME} animate="always" expression={EXPR[expr]} title={NAME} />
+      <div className="blob" role="img" aria-label={`${name}，现在${LABELS[expr]}`}>
+        <Blobatar ref={ref} name={name} animate="always" expression={EXPR[expr]} title={name} />
       </div>
       <p aria-live="polite" className="sr-only">
-        {NAME} 现在{LABELS[expr]}
+        {name} 现在{LABELS[expr]}
       </p>
 
       <form className="composer" onSubmit={send}>
@@ -77,6 +105,14 @@ export default function App() {
           发送
         </button>
       </form>
+
+      <div className="examples">
+        {EXAMPLES.map((m) => (
+          <button key={m} type="button" disabled={pending} onClick={() => react(m)}>
+            {m}
+          </button>
+        ))}
+      </div>
     </main>
   );
 }
