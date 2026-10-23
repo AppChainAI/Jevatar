@@ -1,7 +1,7 @@
 // 单命令开发：同时拉起 API 服务和 Vite
 const procs = [
   Bun.spawn(["bun", "--watch", "run", "server.ts"], { stdout: "inherit", stderr: "inherit" }),
-  Bun.spawn(["bunx", "vite"], { stdout: "inherit", stderr: "inherit" }),
+  Bun.spawn(["bun", "run", "dev:web"], { stdout: "inherit", stderr: "inherit" }),
 ];
 
 process.on("SIGINT", () => {

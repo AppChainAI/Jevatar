@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "bun run dev.ts",
     "dev:server": "bun --watch run server.ts",
-    "dev:web": "bunx vite",
-    "build": "bunx vite build",
+    "dev:web": "vite",
+    "build": "vite build",
     "start": "bun run server.ts",
     "test": "bun test"
   },
